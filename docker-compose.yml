@@ -1,0 +1,26 @@
+version: '3.8'
+
+services:
+  blazorapp:
+    build:
+      context: .
+      dockerfile: Nullposters.DataInspector.UI/Dockerfile
+    ports:
+      - "8080:80"
+    depends_on:
+      - api
+    networks:
+      - app-network
+
+  api:
+    build:
+      context: .
+      dockerfile: Nullposters.DataInspector.Api/Dockerfile
+    ports:
+      - "5000:80"
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge

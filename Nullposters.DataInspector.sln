@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.10.35122.118
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nullposters.DataInspector.UI", "Nullposters.DataInspector.UI\Nullposters.DataInspector.UI.csproj", "{DD1523B2-5607-48E2-BBAC-A9005D29CA20}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nullposters.DataInspector.Api", "Nullposters.DataInspector.Api\Nullposters.DataInspector.Api.csproj", "{66822F3C-5711-48E2-8501-7D6655C4F1E7}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{DD1523B2-5607-48E2-BBAC-A9005D29CA20}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DD1523B2-5607-48E2-BBAC-A9005D29CA20}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DD1523B2-5607-48E2-BBAC-A9005D29CA20}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DD1523B2-5607-48E2-BBAC-A9005D29CA20}.Release|Any CPU.Build.0 = Release|Any CPU
+		{66822F3C-5711-48E2-8501-7D6655C4F1E7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{66822F3C-5711-48E2-8501-7D6655C4F1E7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{66822F3C-5711-48E2-8501-7D6655C4F1E7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{66822F3C-5711-48E2-8501-7D6655C4F1E7}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {B41D614C-737D-40F2-BEF6-8FC204CC0246}
+	EndGlobalSection
+EndGlobal

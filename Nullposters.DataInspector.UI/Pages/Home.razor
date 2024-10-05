@@ -1,0 +1,101 @@
+﻿@page "/"
+@inject HttpClient Http
+<h3>Enter Connection String</h3>
+
+<input type="text" @bind="connectionString" placeholder="Enter connection string..." />
+<h3>Select Database Provider</h3>
+<select @bind="selectedProvider">
+    <option value="SqlServer">SQL Server</option>
+    <option value="PostgreSQL">PostgreSQL</option>
+    <option value="MySQL">MySQL</option>
+</select>
+
+<button @onclick="ConnectToDatabase">Connect</button>
+
+@if (errorMessage != null)
+{
+    <p style="color:red">@errorMessage</p>
+}
+
+@if (tableSchemas != null)
+{
+    @foreach (var table in tableSchemas)
+    {
+        <h4>Table: @table.TableName</h4>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Column Name</th>
+                    <th>Data Type</th>
+                    <th>Max Length</th>
+                    <th>Is Nullable</th>
+                    <th>Default Value</th>
+                    <th>Primary Key</th>
+                    <th>Foreign Key</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var column in table.Columns)
+                {
+                    <tr>
+                        <td>@column.ColumnName</td>
+                        <td>@column.DataType</td>
+                        <td>@(column.CharacterMaximumLength.HasValue ? column.CharacterMaximumLength.ToString() : "N/A")</td>
+                        <td>@column.IsNullable</td>
+                        <td>@(string.IsNullOrEmpty(column.ColumnDefault) ? "N/A" : column.ColumnDefault)</td>
+                        <td>@(column.IsPrimaryKey ? "Yes" : "No")</td>
+                        <td>@(column.IsForeignKey ? "Yes" : "No")</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+}
+
+@code {
+    private string connectionString = string.Empty;
+    private string selectedProvider = "SqlServer";
+    private string errorMessage = string.Empty;
+    private List<TableSchema> tableSchemas = new List<TableSchema>();
+
+    private async Task ConnectToDatabase()
+    {
+        errorMessage = string.Empty;
+
+        try
+        {
+            var request = new { ConnectionString = connectionString, Provider = selectedProvider };
+            var response = await Http.PostAsJsonAsync("api/schema/GetTables", request);
+
+            if (response.IsSuccessStatusCode)
+            {
+                tableSchemas = await response.Content.ReadFromJsonAsync<List<TableSchema>>();
+            }
+            else
+            {
+                errorMessage = "Failed to fetch schema data.";
+            }
+        }
+        catch (Exception ex)
+        {
+            errorMessage = $"Error: {ex.Message}";
+        }
+    }
+
+    public class TableSchema
+    {
+        public string TableName { get; set; } = string.Empty;
+        public List<ColumnSchema> Columns { get; set; } = new List<ColumnSchema>();
+    }
+
+    public class ColumnSchema
+    {
+        public string ColumnName { get; set; } = string.Empty;
+        public string DataType { get; set; } = string.Empty;
+        public int? CharacterMaximumLength { get; set; }
+        public string IsNullable { get; set; } = string.Empty;
+        public string ColumnDefault { get; set; } = string.Empty;
+        public bool IsPrimaryKey { get; set; }
+        public bool IsForeignKey { get; set; }
+    }
+}
